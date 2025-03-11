@@ -15,21 +15,21 @@ $(function () {
             $this.prop("disabled", true);
 
             $.ajax({
-                url: "contact.php",
+                url: "https://smtp.onedice.org:2112/send_email",
                 type: "POST",
-                data: {
-                    name: name,
-                    email: email,
-                    subject: subject,
-                    message: message
-                },
-                cache: false,
+                data: JSON.stringify({
+                    name: $("input#name").val(),
+                    email: $("input#email").val(),
+                    subject: $("input#subject").val(),
+                    message: $("textarea#message").val()
+                }),
+                contentType: "application/json",
                 success: function () {
                     $('#success').html("<div class='alert alert-success'>");
                     $('#success > .alert-success').html("<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;")
                             .append("</button>");
                     $('#success > .alert-success')
-                            .append("<strong>Your message has been sent. </strong>");
+                            .append("<strong>Message sent successfully!</strong>");
                     $('#success > .alert-success')
                             .append('</div>');
                     $('#contactForm').trigger("reset");
@@ -47,7 +47,14 @@ $(function () {
                         $this.prop("disabled", false);
                     }, 1000);
                 }
+                // success: function () {
+                //     alert("Message sent successfully!");
+                // },
+                // error: function () {
+                //     alert("Failed to send the message.");
+                // }
             });
+            
         },
         filter: function () {
             return $(this).is(":visible");
