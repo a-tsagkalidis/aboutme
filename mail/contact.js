@@ -47,12 +47,6 @@ $(function () {
                         $this.prop("disabled", false);
                     }, 1000);
                 }
-                // success: function () {
-                //     alert("Message sent successfully!");
-                // },
-                // error: function () {
-                //     alert("Failed to send the message.");
-                // }
             });
             
         },
