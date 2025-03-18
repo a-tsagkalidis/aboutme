@@ -11,44 +11,48 @@ $(function () {
             var subject = $("input#subject").val();
             var message = $("textarea#message").val();
 
-            $this = $("#sendMessageButton");
+            var $this = $("#sendMessageButton");
             $this.prop("disabled", true);
 
-            $.ajax({
-                url: "https://smtp.onedice.org:2112/send_email",
-                type: "POST",
-                data: JSON.stringify({
-                    name: $("input#name").val(),
-                    email: $("input#email").val(),
-                    subject: $("input#subject").val(),
-                    message: $("textarea#message").val()
-                }),
-                contentType: "application/json",
-                success: function () {
+            function sendEmail(url) {
+                return $.ajax({
+                    url: url,
+                    type: "POST",
+                    data: JSON.stringify({
+                        name: name,
+                        email: email,
+                        subject: subject,
+                        message: message
+                    }),
+                    contentType: "application/json"
+                });
+            }
+
+            sendEmail("https://smtp.myremoteserver.onedice.org/send_email").done(function () {
+                $('#success').html("<div class='alert alert-success'>");
+                $('#success > .alert-success').html("<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>")
+                        .append("<strong>Message sent successfully!</strong>")
+                        .append('</div>');
+                $('#contactForm').trigger("reset");
+            }).fail(function () {
+                sendEmail("https://smtp.myhomeserver.onedice.org:2112/send_email").done(function () {
                     $('#success').html("<div class='alert alert-success'>");
-                    $('#success > .alert-success').html("<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;")
-                            .append("</button>");
-                    $('#success > .alert-success')
-                            .append("<strong>Message sent successfully!</strong>");
-                    $('#success > .alert-success')
+                    $('#success > .alert-success').html("<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>")
+                            .append("<strong>Message sent successfully through fallback server!</strong>")
                             .append('</div>');
                     $('#contactForm').trigger("reset");
-                },
-                error: function () {
+                }).fail(function () {
                     $('#success').html("<div class='alert alert-danger'>");
-                    $('#success > .alert-danger').html("<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;")
-                            .append("</button>");
-                    $('#success > .alert-danger').append($("<strong>").text("Sorry " + name + ", it seems that our mail server is not responding. Please try again later!"));
-                    $('#success > .alert-danger').append('</div>');
+                    $('#success > .alert-danger').html("<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>")
+                            .append($("<strong>").text("Sorry " + name + ", both mail servers are not responding. Please try again later!"))
+                            .append('</div>');
                     $('#contactForm').trigger("reset");
-                },
-                complete: function () {
-                    setTimeout(function () {
-                        $this.prop("disabled", false);
-                    }, 1000);
-                }
+                });
+            }).always(function () {
+                setTimeout(function () {
+                    $this.prop("disabled", false);
+                }, 1000);
             });
-            
         },
         filter: function () {
             return $(this).is(":visible");
