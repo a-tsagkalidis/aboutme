@@ -19,8 +19,8 @@ $("#contactForm input, #contactForm textarea").jqBootstrapValidation({
 		message: message
 	});
 
-	var primaryServer = "https://smtp.myremoteserver.onedice.org/send_email";
-	var reduntancyServer = "https://smtp.myhomeserver.onedice.org:2112/send_email";
+	var primaryServer = "https://smtp.apis.onedice.org/send_email";
+	var reduntancyServer = "https://smtp.apis.staging.onedice.org:2112/send_email";
 	
 	// Send to primary server with a short timeout
 	$.ajax({
