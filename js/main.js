@@ -89,7 +89,48 @@
         projectsIsotope.isotope({filter: $(this).data('filter')});
     });
     
-    
+
+    // Dark Mode Toggle with enhanced animation
+    $('.dark-mode-toggle').click(function () {
+        // Add a small spin animation when clicked
+        $(this).css('animation', 'spin 0.7s ease');
+        
+        setTimeout(() => {
+            $(this).css('animation', $('body').hasClass('dark-mode') ? 'pulse 3s infinite' : 'glow 3s infinite');
+        }, 700);
+        
+        $('body').toggleClass('dark-mode');
+        
+        // Change icon based on mode
+        if ($('body').hasClass('dark-mode')) {
+            $(this).find('i').removeClass('fa-moon').addClass('fa-sun');
+            localStorage.setItem('darkMode', 'enabled');
+        } else {
+            $(this).find('i').removeClass('fa-sun').addClass('fa-moon');
+            localStorage.setItem('darkMode', 'disabled');
+        }
+        
+        return false;
+    });
+
+    // Add the spin animation keyframes through JavaScript
+    const style = document.createElement('style');
+    style.innerHTML = `
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }`;
+    document.head.appendChild(style);
+
+    // Check for saved dark mode preference when page loads
+    $(document).ready(function() {
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            $('body').addClass('dark-mode');
+            $('.dark-mode-toggle').find('i').removeClass('fa-moon').addClass('fa-sun');
+            $('.dark-mode-toggle').css('animation', 'glow 3s infinite');
+        }
+    });
+
     // Back to top button
     $(window).scroll(function () {
         if ($(this).scrollTop() > 200) {
