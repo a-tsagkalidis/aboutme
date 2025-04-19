@@ -10059,6 +10059,28 @@ body.dark-mode .bg-white {
   transition: all 0.5s ease;
 }
 
+body.dark-mode h3 {
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+  color: #ffb900;
+}
+
+body.dark-mode h5 {
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+  color: #ffb900;
+}
+
+body.dark-mode h1,
+body.dark-mode h6 {
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+  color: #cbcbcb;
+}
+
 body.dark-mode .btn-outline-dark {
   color: #e0e0e0;
   border-color: #e0e0e0;
