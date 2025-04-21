@@ -10081,6 +10081,14 @@ body.dark-mode h6 {
   color: #cbcbcb;
 }
 
+.text-white-h1 {
+  color: #fff !important;
+}
+
+body.dark-mode .text-white-h1 {
+    color: #121212 !important;
+}
+
 body.dark-mode .btn-outline-dark {
   color: #e0e0e0;
   border-color: #e0e0e0;
