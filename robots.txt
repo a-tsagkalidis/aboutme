@@ -1,0 +1,9 @@
+# robots.txt for Argyrios Tsagkalidis
+# https://aboutme.onedice.org/
+
+User-agent: *
+Allow: /
+
+Disallow: /robots.txt
+
+Sitemap: https://aboutme.onedice.org/sitemap.xml
